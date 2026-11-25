@@ -1,0 +1,190 @@
+digraph UML {
+  rankdir=TB;
+  graph [fontname="Helvetica", fontsize=11, nodesep=0.45, ranksep=0.7, splines=spline, bgcolor="white", pad=0.3];
+  node  [shape=plain, fontname="Helvetica", fontsize=10];
+  edge  [fontname="Helvetica", fontsize=9];
+
+  Gremio [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#FFF8E1">
+    <tr><td><i>&laquo;Client&raquo;</i></td></tr>
+    <tr><td><b>Gremio</b></td></tr>
+    <hr/>
+    <tr><td align="left">- nombre: String</td></tr>
+    <tr><td align="left">- gestor: GestorHeroes</td></tr>
+    <hr/>
+    <tr><td align="left">+ reclutarGuerrero(nombre, apodo, fecha, poderAtaque, victorias, bono): Personaje</td></tr>
+    <tr><td align="left">+ reclutarMago(nombre, apodo, fecha, reservaMana): Personaje</td></tr>
+    <tr><td align="left">+ mostrarValorCombate(): void</td></tr>
+  </table>>];
+
+  Gestor [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#E3F2FD">
+    <tr><td><i>&laquo;Singleton&raquo; &laquo;Facade&raquo;</i></td></tr>
+    <tr><td><b>GestorHeroes</b></td></tr>
+    <hr/>
+    <tr><td align="left"><u>- instancia: GestorHeroes</u></td></tr>
+    <tr><td align="left">- fabricas: Map&lt;String, PersonajeFactory&gt;</td></tr>
+    <tr><td align="left">- registro: RegistroHeroes</td></tr>
+    <tr><td align="left">- ranking: RankingGuerreros</td></tr>
+    <tr><td align="left">- generadorReporte: GeneradorReporteBatalla</td></tr>
+    <hr/>
+    <tr><td align="left">- GestorHeroes()</td></tr>
+    <tr><td align="left"><u>+ getInstancia(): GestorHeroes</u></td></tr>
+    <tr><td align="left">+ registrarFabrica(tipo: String, f: PersonajeFactory): void</td></tr>
+    <tr><td align="left">+ reclutarGuerrero(gremio, nombre, apodo, fecha, poderAtaque, victorias, bono): Personaje</td></tr>
+    <tr><td align="left">+ reclutarMago(gremio, nombre, apodo, fecha, reservaMana): Personaje</td></tr>
+    <tr><td align="left">+ reclutar(gremio, tipo, datos: DatosPersonaje): Personaje</td></tr>
+    <tr><td align="left">+ consultarMejorGuerrero(): Optional&lt;Guerrero&gt;</td></tr>
+    <tr><td align="left">+ listarHeroes(gremio: String): List&lt;Personaje&gt;</td></tr>
+    <tr><td align="left">+ generarReporteBatalla(batalla, gremios...): String</td></tr>
+  </table>>];
+
+  Factory [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#E8F5E9">
+    <tr><td><i>&laquo;Creator&raquo;</i></td></tr>
+    <tr><td><b><i>PersonajeFactory</i></b></td></tr>
+    <hr/>
+    <tr><td align="left"> </td></tr>
+    <hr/>
+    <tr><td align="left">+ crear(datos: DatosPersonaje): Personaje</td></tr>
+    <tr><td align="left"><i># crearPersonaje(datos: DatosPersonaje): Personaje</i></td></tr>
+  </table>>];
+
+  GFactory [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#E8F5E9">
+    <tr><td><i>&laquo;ConcreteCreator&raquo;</i></td></tr>
+    <tr><td><b>GuerreroFactory</b></td></tr>
+    <hr/>
+    <tr><td align="left"> </td></tr>
+    <hr/>
+    <tr><td align="left"># crearPersonaje(datos): Personaje</td></tr>
+  </table>>];
+
+  MFactory [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#E8F5E9">
+    <tr><td><i>&laquo;ConcreteCreator&raquo;</i></td></tr>
+    <tr><td><b>MagoFactory</b></td></tr>
+    <hr/>
+    <tr><td align="left"> </td></tr>
+    <hr/>
+    <tr><td align="left"># crearPersonaje(datos): Personaje</td></tr>
+  </table>>];
+
+  Datos [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#F5F5F5">
+    <tr><td><b>DatosPersonaje</b></td></tr>
+    <hr/>
+    <tr><td align="left">- nombre: String</td></tr>
+    <tr><td align="left">- apodo: String</td></tr>
+    <tr><td align="left">- fechaCreacion: LocalDate</td></tr>
+    <tr><td align="left">- atributos: Map&lt;String, Double&gt;</td></tr>
+    <hr/>
+    <tr><td align="left">+ con(atributo, valor): DatosPersonaje</td></tr>
+    <tr><td align="left">+ getAtributo(atributo): double</td></tr>
+  </table>>];
+
+  Personaje [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#FCE4EC">
+    <tr><td><i>&laquo;Product&raquo;</i></td></tr>
+    <tr><td><b><i>Personaje</i></b></td></tr>
+    <hr/>
+    <tr><td align="left">- id: int</td></tr>
+    <tr><td align="left">- nombre: String</td></tr>
+    <tr><td align="left">- apodo: String</td></tr>
+    <tr><td align="left">- fechaCreacion: LocalDate</td></tr>
+    <hr/>
+    <tr><td align="left"><i>+ getValorCombate(): double</i></td></tr>
+    <tr><td align="left"><i>+ getTipo(): String</i></td></tr>
+  </table>>];
+
+  Guerrero [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#FCE4EC">
+    <tr><td><i>&laquo;ConcreteProduct&raquo;</i></td></tr>
+    <tr><td><b>Guerrero</b></td></tr>
+    <hr/>
+    <tr><td align="left">- poderAtaque: double</td></tr>
+    <tr><td align="left">- victorias: int</td></tr>
+    <tr><td align="left">- bonoPorVictoria: double</td></tr>
+    <hr/>
+    <tr><td align="left">+ getFuerzaTotal(): double</td></tr>
+    <tr><td align="left">+ registrarVictoria(): void</td></tr>
+    <tr><td align="left">+ getValorCombate(): double</td></tr>
+  </table>>];
+
+  Mago [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#FCE4EC">
+    <tr><td><i>&laquo;ConcreteProduct&raquo;</i></td></tr>
+    <tr><td><b>Mago</b></td></tr>
+    <hr/>
+    <tr><td align="left">- reservaMana: double</td></tr>
+    <hr/>
+    <tr><td align="left">+ getAntiguedad(): int</td></tr>
+    <tr><td align="left">+ getReservaManaFinal(): double</td></tr>
+    <tr><td align="left">+ getValorCombate(): double</td></tr>
+  </table>>];
+
+  Registro [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#EDE7F6">
+    <tr><td><i>&laquo;Subsystem&raquo;</i></td></tr>
+    <tr><td><b>RegistroHeroes</b></td></tr>
+    <hr/>
+    <tr><td align="left">- heroesPorGremio: Map&lt;String, List&lt;Personaje&gt;&gt;</td></tr>
+    <hr/>
+    <tr><td align="left">+ registrar(gremio, personaje): void</td></tr>
+    <tr><td align="left">+ obtenerPorGremio(gremio): List&lt;Personaje&gt;</td></tr>
+    <tr><td align="left">+ obtenerTodos(): List&lt;Personaje&gt;</td></tr>
+  </table>>];
+
+  Ranking [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#EDE7F6">
+    <tr><td><i>&laquo;Subsystem&raquo;</i></td></tr>
+    <tr><td><b>RankingGuerreros</b></td></tr>
+    <hr/>
+    <tr><td align="left"> </td></tr>
+    <hr/>
+    <tr><td align="left">+ mejorGuerrero(personajes): Optional&lt;Guerrero&gt;</td></tr>
+  </table>>];
+
+  Reporte [label=<
+  <table border="1" cellborder="0" cellspacing="0" cellpadding="3" bgcolor="#EDE7F6">
+    <tr><td><i>&laquo;Subsystem&raquo;</i></td></tr>
+    <tr><td><b>GeneradorReporteBatalla</b></td></tr>
+    <hr/>
+    <tr><td align="left"> </td></tr>
+    <hr/>
+    <tr><td align="left">+ generar(batalla, participantes): String</td></tr>
+  </table>>];
+
+  Nota [shape=note, style=filled, fillcolor="#FFFDE7", fontsize=9, label="if (instancia == null)\l    instancia = new GestorHeroes();\lreturn instancia;\l"];
+
+  // Cliente -> Fachada
+  Gremio -> Gestor [arrowhead=vee, label=" usa (getInstancia())", xlabel=""];
+  Gestor -> Gestor [arrowhead=vee, headlabel="1", taillabel="", label=" instancia"];
+  Nota -> Gestor [style=dashed, arrowhead=none];
+
+  // Fachada -> subsistema (composición)
+  Gestor -> Factory  [arrowtail=diamond, dir=back, headlabel="1..*", label=" fabricas"];
+  Gestor -> Registro [arrowtail=diamond, dir=back, headlabel="1"];
+  Gestor -> Ranking  [arrowtail=diamond, dir=back, headlabel="1"];
+  Gestor -> Reporte  [arrowtail=diamond, dir=back, headlabel="1"];
+
+  // Factory Method
+  GFactory -> Factory [arrowhead=empty];
+  MFactory -> Factory [arrowhead=empty];
+  Factory -> Datos [style=dashed, arrowhead=vee, label=" «use»"];
+  GFactory -> Guerrero [style=dashed, arrowhead=vee, label=" «create»"];
+  MFactory -> Mago [style=dashed, arrowhead=vee, label=" «create»"];
+  Factory -> Personaje [style=dashed, arrowhead=vee, label=" «create»"];
+
+  // Productos
+  Guerrero -> Personaje [arrowhead=empty];
+  Mago -> Personaje [arrowhead=empty];
+
+  // Subsistema -> productos
+  Registro -> Personaje [arrowtail=odiamond, dir=back, headlabel="0..*"];
+  Ranking -> Guerrero [style=dashed, arrowhead=vee];
+
+  {rank=same; Gremio; Nota}
+  {rank=same; Factory; Registro; Ranking; Reporte}
+  {rank=same; GFactory; MFactory; Datos}
+}
